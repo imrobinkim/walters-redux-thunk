@@ -13,8 +13,22 @@ const artworksReducer = (
   }
 }
 
+const loadingReducer = (oldState = "false", action) => {
+  switch (action.type) {
+    case "FETCHED_INITIAL_ARTWORKS":
+      return false 
+
+    case "LOADING_ARTWORKS":
+      return true 
+
+    default:
+      return oldState
+  }
+}
+
 const rootReducer = combineReducers({
   artworks: artworksReducer,
+  loading: loadingReducer,
 })
 
 export default rootReducer;

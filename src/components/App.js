@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { fetchingArtworks } from '../redux/actionCreators';
 import Artwork from './Artwork';
+import { stat } from 'fs';
 
 
 class App extends Component {
@@ -13,10 +14,14 @@ class App extends Component {
 
   render() {
     console.log(this.props.artworks)
-    const artworksNames = this.props.artworks.map(a => <li key={a.ObjectID}>{a.Title}</li>)
-    return (
+    const artworks = this.props.artworks.map(artwork => <Artwork 
+      key={artwork.ObjectID} 
+      artwork={artwork} 
+    />)
+
+    return this.props.loading ? <div>Loading...</div> : (
       <div className="App">
-        <ul>{artworksNames}</ul>
+        <div>{artworks}</div>
       </div>
     );
   }
@@ -24,7 +29,8 @@ class App extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    artworks: state.artworks
+    artworks: state.artworks,
+    loading: state.loading
   }
 }
 
@@ -35,12 +41,3 @@ const mapDispatchToProps = (dispatch) => {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
-
-// {
-//   this.props.artworks.map(artwork => (
-//     <Artwork
-//       key={artwork.ObjectID}
-//       image={artwork.PrimaryImage.Medium}
-//     />
-//   ))
-// }

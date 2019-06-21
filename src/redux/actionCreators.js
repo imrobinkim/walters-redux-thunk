@@ -5,9 +5,15 @@ function fetchedArtworks(artworks) {
   return { type: "FETCHED_INITIAL_ARTWORKS", artworks }
 }
 
+function loadingArtworks() {
+  return { type: "LOADING_ARTWORKS" }
+}
+
 function fetchingArtworks(artworks) {
   //b/c of thunk, actionCreator can return function and that function has access to dispatch
   return (dispatch) => {
+    dispatch(loadingArtworks())
+
     fetch(URL)
     .then(res => res.json())
     .then(artworks => {
